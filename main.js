@@ -5,11 +5,20 @@ let uploadedFile = document.getElementById('xmlFile')
 
 function xmlToText() {
   if(xmlInicio != "") {
-    let newText = xmlInicio.value
-    // Remove Tags for XML song
-    let addNewLine = newText.replace(/<br\s*\/?>/g, '\n');
-    let removeTags = addNewLine.replace(/\s*\<.*?\>\s*/g, '\n');
-    xmlFin.value = removeTags
+    let xmlVal = xmlInicio.value
+    xmlVal = xmlVal.toString()
+    // Song Tags
+    // Properties
+    let strDoc = xmlVal.replace(/<properties>(.*?)<\/properties>/gs, "")
+    // Remove Lyrics Tags
+    strDoc = strDoc.replace(/\<lyrics>|<\/lyrics>/g, "")
+    // Remove Lyrics Tags
+    strDoc = strDoc.replace(/\<verse.*>|<\/verse>/g, "")
+    strDoc = strDoc.replace(/(<([^>]+)>)/g, '\n');
+    strDoc = strDoc.replace(/\n\n/g, '');
+    strDoc = strDoc.replace(/\s*\n/i, '');
+    xmlFin.value = strDoc
+    console.log(JSON.stringify(strDoc))
   } 
 }
 
@@ -17,4 +26,3 @@ function xmlToText() {
 convertFile.addEventListener('click', function(){
   xmlToText();
 })
-

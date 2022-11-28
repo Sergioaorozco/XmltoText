@@ -7,14 +7,16 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
   <title>XMLtoPlainText</title>
 </head>
-<body class="flex text-center flex-col max-w-screen-xl m-auto h-full">
-  <h1 class="text-3xl font-bold mb-4 py-3">Xml to Plain Text</h1>
-  <input class="my-2" type="file" name="file" id="xmlFile">
-  <div class="flex gap-3 h-2/6">
-    <textarea placeholder="Escribe tu canción aquí" name="xml receive" id="xmlOrigin" cols="30" rows="10" class="w-full rounded-md"></textarea>
-    <textarea readonly name="xml receive" id="xmlDestino" cols="30" rows="10" class="w-full bg-gray-100 rounded-md"></textarea>
+<body>
+  <div class="px-4 flex text-center flex-col max-w-screen-xl m-auto h-full">
+      <h1 class="text-3xl font-bold mb-4 py-3">Xml to Plain Text</h1>
+      <input class="my-2" type="file" name="file" id="xmlFile">
+      <div class="flex gap-3 h-2/6">
+        <textarea placeholder="Escribe tu canción aquí" name="xml receive" id="xmlOrigin" cols="30" rows="10" class="w-full rounded-md"></textarea>
+        <textarea readonly name="xml receive" id="xmlDestino" cols="30" rows="10" class="w-full bg-gray-100 rounded-md"></textarea>
+      </div>
+      <button class="mt-2 bg-blue-500 hover:bg-blue-700 py-2 px-6 text-white font'bold' rounded-xl transition-all hover:transition-all" id="convertButton">Convertir</button>
   </div>
-  <button class="mt-2 bg-blue-500 hover:bg-blue-700 py-2 px-6 rounded-xl transition-all hover:transition-all" id="convertButton">Convertir</button>
 </body>
 <script src="main.js"></script>
 </html>
