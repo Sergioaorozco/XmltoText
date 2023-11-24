@@ -41,9 +41,10 @@ const xmltoText = ()=> {
 }
 
 const copyToClip = () =>{
-  if(fileOutput !== null) {
-    navigator.clipboard.writeText(fileOutput.value)
-    showText.value = true
+  if (typeof fileInit.value === "string") {
+    fileOutput.value = fileInit.value;
+  } else {
+    console.error("Error: fileInit.value is not a string");
   }
 }
 
