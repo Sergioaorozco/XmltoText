@@ -21,35 +21,36 @@ function loadFile(event: any) {
   }
 }
 
-const xmltoText = ()=> {
-    // Properties
-    if (typeof fileInit.value === "string") {
-      let xmlVal = fileInit.value.replace(/<properties>(.*?)<\/properties>/gs, "")
-      // Remove Lyrics Tags
-      xmlVal = xmlVal.replace(/\<lyrics>|<\/lyrics>/g, "")
-      // Remove Verse Tags
-      xmlVal = xmlVal.replace(/\<verse.*>|<\/verse>/g, "")
-      // Remove LineBreaks Tags
-      xmlVal = xmlVal.replace(/(<([^>]+)>)/g, '\n');
-      xmlVal = xmlVal.replace(/\n\n/g, '');
-      xmlVal = xmlVal.replace(/\s*\n/i, '');
-      fileOutput.value = xmlVal
-    }
+const xmltoText = () => {
+  // Properties
+  if (typeof fileInit.value === "string") {
+    let xmlVal = fileInit.value.replace(/<properties>(.*?)<\/properties>/gs, "")
+    // Remove Lyrics Tags
+    xmlVal = xmlVal.replace(/\<lyrics>|<\/lyrics>/g, "")
+    // Remove Verse Tags
+    xmlVal = xmlVal.replace(/\<verse.*>|<\/verse>/g, "")
+    // Remove LineBreaks Tags
+    xmlVal = xmlVal.replace(/(<([^>]+)>)/g, '\n');
+    xmlVal = xmlVal.replace(/\n\n/g, '');
+    xmlVal = xmlVal.replace(/\s*\n/i, '');
+    fileOutput.value = xmlVal
+  }
 
-    copyToClip();
+  copyToClip();
 
 }
 
-const copyToClip = () =>{
-  if (typeof fileInit.value === "string") {
-    fileOutput.value = fileInit.value;
+const copyToClip = () => {
+  if (typeof fileOutput.value === 'string') {
+    navigator.clipboard.writeText(fileOutput.value);
+    showText.value = true;
   } else {
-    console.error("Error: fileInit.value is not a string");
+    console.error('Error: Formato no permitido');
   }
 }
 
 
-const handWrittenSong = (info:any)=> {
+const handWrittenSong = (info: any) => {
   fileInit.value = info.target.value
 }
 </script>
@@ -59,20 +60,26 @@ const handWrittenSong = (info:any)=> {
     <h1 class="text-slate-600 text-3xl font-bold mt-10">Herramienta Canción ProPresenter</h1>
     <label for="uploadXml" class="drop-container" id="dropcontainer">
       <span class="drop-title">Arrastra tus archivos o</span>
-      <input id="uploadXml" type="file" @change="loadFile">
+      <input accept="text/plain" id="uploadXml" type="file" @change="loadFile">
     </label>
-    <p class="font-bold text-slate-100 bg-slate-900 rounded-lg py-3 animate-pulse animate-ease-in" v-if="showText">Texto Copiado ve a ProPresenter</p>
+    <p class="font-bold text-slate-100 bg-slate-900 rounded-lg py-3 animate-pulse animate-ease-in" v-if="showText">Texto
+      Copiado ve a ProPresenter</p>
     <section class="flex gap-x-3">
-      <textarea @input="handWrittenSong($event)" placeholder="Canción OpenLp" class=" p-3 w-full border border-slate-300 rounded-md" name="xmlInit" ref="xmlInit" id="xmlInit" cols="30"
+      <textarea @input="handWrittenSong($event)" placeholder="Canción OpenLp"
+        class=" p-3 w-full border border-slate-300 rounded-md" name="xmlInit" ref="xmlInit" id="xmlInit" cols="30"
         rows="10">{{ fileInit }}</textarea>
-        <div class="w-full relative">
-          <copyIcon class="right-2 top-2 hover:bg-slate-300 transition-colors duration-200 absolute bg-slate-200 rounded-full p-2">C</copyIcon>
-          <textarea placeholder="Canción para ProPresenter" class="bg-slate-100 p-3 w-full border border-slate-300 rounded-md" name="songOutput" id="songOutput" cols="30"
-            rows="10" readonly>{{ fileOutput }}</textarea>
-        </div>
+      <div class="w-full relative">
+        <copyIcon
+          class="right-2 top-2 hover:bg-slate-300 transition-colors duration-200 absolute bg-slate-200 rounded-full p-2">C
+        </copyIcon>
+        <textarea placeholder="Canción para ProPresenter"
+          class="bg-slate-100 p-3 w-full border border-slate-300 rounded-md" name="songOutput" id="songOutput" cols="30"
+          rows="10" readonly>{{ fileOutput }}</textarea>
+      </div>
     </section>
     <button @click="xmltoText"
-      class="bg-blue-700 text-white font-bold hover:bg-blue-800 transition-colors duration-200 py-4 rounded-md" :class="{'bg-slate-800/30 text-slate-700/50 pointer-events-none' : !fileInit}">{{ !fileInit ? 'Primero Agrega la Canción' : 'Click para Convertir'}}</button>
+      class="bg-blue-700 text-white font-bold hover:bg-blue-800 transition-colors duration-200 py-4 rounded-md"
+      :class="{ 'bg-slate-800/30 text-slate-700/50 pointer-events-none': !fileInit }">{{ !fileInit ? 'Primero Agrega la Canción' : 'Click para Convertir' }}</button>
   </div>
 </template>
 
